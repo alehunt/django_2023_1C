@@ -16,21 +16,22 @@ class otra_clase:
 import os, sys #importacion forma incorrecta
 import os 
 import sys
-
+suma
 # FUCIONES 
 # funcion suma(a,b){ NO ES FUNCION EN PYTHON
 #     return a+b
 # }
 
-""" 
+ 
+def suma(a,b):
+    '''
     Funcion que permite sumar dos numeros
         Parameters:
             a (int): numero
             b (int): numero
         Returns:
             c (int): resultado de la suma
-"""  
-def suma(a,b):
+    ''' 
     c = a+b
     return c
 
@@ -47,6 +48,7 @@ x = 10  # 'x' es una variable global
 mesanje = 'Hola me presento soy un mensaje Global'
 
 def saludo():
+    edad = 30
     print(mesanje)
 
 saludo()
