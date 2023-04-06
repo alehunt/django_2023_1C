@@ -1,5 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
+
+
+def index(request):
+    return render(request, "index.html")
 
 
 # Create your views here.
@@ -8,10 +13,16 @@ def special_case_2003(request):
 
 
 def year_archive(request, year):
-    return HttpResponse(f"Archivos el año {year}")
+    if year <= 2023:
+        return HttpResponse(f"Archivos el año {year}")
+    else:
+        url  = reverse('articles-index')
+        return HttpResponseRedirect(url)
+    # return HttpResponse(f"Archivos el año {year}")
 
 
 def month_archive(request, year, month):
+    variable = request.GET['montoto']
     return HttpResponse(f"Archivos del mes {month} del año {year}")
 
 
