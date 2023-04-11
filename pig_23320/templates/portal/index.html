@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body>
+    <main>
+        <h1 class='algo'>{{ titulo }}</h1>
+        <p>test test</p>
+        <p>{{ parametro_uno|default:"NO RECIBI NADA" }}</p>
+        <p>{{ hoy|date:'d-m-Y' }}</p>
+        {% if cursos|length > 0 %}
+            <ul>
+                {% for curso in cursos  %}
+                    <li>
+                        {{ curso.nombre }} - {{ curso.categoria}}
+                        <p>{{ curso.descripcion }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay cursos disponibles</p>
+        {% endif %}
+        
+    </main>
+</body>
+</html>

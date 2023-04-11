@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Mundo!!</title>
+</head>
+<body>
+    <h1 style="color:blue">HOLA GENTE! hoy es {{ahora}}</h1>
+    <h1 style="color:blue">HOLA GENTE! mañana es {{mañana}}</h1>
+
+    {% include "hola_mundo/juan.html" %}
+
+    {% if saludos.count != 1 %}
+    <ul>
+        {% for palabra in saludos %}
+            <li> {{ palabra }} </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+            <h1>{{saludos.0}}</h1>
+    {% endif %}
+    
+    {% comment %} <h2> {{saludos.0}} gente!</h2>
+    <h2> {{saludos.1}} people!</h2>
+    <h2> {{saludos.2}} pessoas!</h2>
+    <h3> {{idioma_saludos.es}} gente!</h3>
+    <h3> {{idioma_saludos.eng}} people!</h3>
+    <h3> {{idioma_saludos.br}} pessoas!</h3> {% endcomment %}
+</body>
+</html>

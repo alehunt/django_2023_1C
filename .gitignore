@@ -1,2 +1,4 @@
 *.bat
 __pycache__
+.env
+Comentarios.txt
