@@ -1,8 +1,7 @@
 
 {% extends 'portal/base.html' %}
-{% block titulo %} INDICE {% endblock%}
+{% block titulo %}Inicio CAC{% endblock titulo %}
 {% block contenido %}
-<main class="flex-shrink-0">
     <section class="py-5 text-center banner">
         <div class="row py-lg-5">
 
@@ -73,19 +72,24 @@
         <!--Grid column-->
             <div class="col-md-6 mb-md-0 mb-6">
                 
-                <form novalidate id="contact-form" name="contact-form" action="" method="POST">
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="md-form mb-0">
-                                <label for="">Nombre</label>
-                                <input type="text">
-                                <label for="">Consulta</label>
-                                <input type="text" cols="40" rows="10">
-                            </div>
-                        </div>
+                {% if mensaje %}
+                    <div class="alert alert-success" role="alert">
+                        {{mensaje}}
                     </div>
+                {% endif %}
+                <form id="contact-form" name="contact-form" action="{% url 'inicio' %}" method="POST">
+                    {% csrf_token %}
+                    {% comment %} {{ contacto_form }} {% endcomment %}
                     
+                    {% comment %} <table>
+                        {{ contacto_form.as_table }}
+                    </table> {% endcomment %}
+
+                    {% comment %} <ul>
+                        {{ contacto_form.as_ul }}
+                    </ul> {% endcomment %}
+
+                    {{ contacto_form.as_p }}
                     <div class="text-center text-md-left mt-3">
                         <button class="btn btn-primary" type="submit">Enviar</button>
                     </div>
@@ -113,5 +117,4 @@
             <!--Grid column-->
         </div>
     </section>
-</main> 
-{% endblock contenido %}   
+{% endblock contenido %}

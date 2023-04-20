@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 from django.urls.conf import include
 
+
 urlpatterns = [
     path('', include('portal.urls')),
     path('administracion/', include('administracion.urls')),
