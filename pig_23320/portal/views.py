@@ -1,20 +1,36 @@
+from datetime import datetime
+from django.conf import settings
+from django.contrib import messages
+from django.core.mail import send_mail
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.template import loader
-
 from portal.forms import ContactoForm
 
-from datetime import datetime
 
 # Create your views here.
-
-
 def index(request):
-    mensaje = None
-    if (request.method == 'POST'):
+    # mensaje=None
+    if request.method == 'POST':
         contacto_form = ContactoForm(request.POST)
-        mensaje = 'Hemos recibido tus datos'
+        # mensaje='Hemos recibido tus datos'
         # acción para tomar los datos del formulario
+        if contacto_form.is_valid():
+            messages.success(request, 'Hemos recibido tus datos')
+            mensaje = f"De: {contacto_form.cleaned_data['nombre']} <{contacto_form.cleaned_data['email']}>\n Asunto: {contacto_form.cleaned_data['asunto']}\n Mensaje: {contacto_form.cleaned_data['mensaje']}"
+            mensaje_html = f"""
+                <p>De: {contacto_form.cleaned_data['nombre']} <a href="mailto:{contacto_form.cleaned_data['email']}">{contacto_form.cleaned_data['email']}</a></p>
+                <p>Asunto:  {contacto_form.cleaned_data['asunto']}</p>
+                <p>Mensaje: {contacto_form.cleaned_data['mensaje']}</p>
+            """
+            asunto = "CONSULTA DESDE LA PAGINA - " + \
+                contacto_form.cleaned_data['asunto']
+            send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [
+                      settings.RECIPIENT_ADDRESS], fail_silently=False, html_message=mensaje_html)
+        # acción para tomar los datos del formulario
+        else:
+            messages.error(
+                request, 'Por favor revisa los errores en el formulario')
     elif request.method == 'GET':
         contacto_form = ContactoForm()
     else:
@@ -45,7 +61,6 @@ def index(request):
 
     context = {
         'cursos': listado_cursos,
-        'mensaje': mensaje,
         'contacto_form': contacto_form
     }
     return render(request, 'portal/index.html', context)

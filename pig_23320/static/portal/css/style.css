@@ -80,3 +80,9 @@ ul.lista-institucional {
     margin-left: 1em;
     line-height: 1.5em;
 }
+
+.alert-error {
+    --bs-alert-color: #efebdd;
+    --bs-alert-bg: #d32b0a;
+    --bs-alert-border-color: #d32b0a;
+}

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portal',
-	'administracion',
+    'administracion',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'pig_23320.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,17 +120,27 @@ USE_TZ = True
 # El debug esta en true, busque el directorio static dentro de las applicacion
 STATIC_URL = '/static/'
 
-#El debug true, buscar un directorio static dentro del proyecto
+# El debug true, buscar un directorio static dentro del proyecto
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-#esto se genera en producci�n y es la que deberemos 
-#crear y django ira a buscar ahi 
-#python manage.py collectstatic
+# esto se genera en producci�n y es la que deberemos
+# crear y django ira a buscar ahi
+# python manage.py collectstatic
 STATIC_ROOT = BASE_DIR / 'static_root'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuracion para el envio de email por medio de GMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT")
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# Clave generada desde la configuracion de Google
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+RECIPIENT_ADDRESS = config("RECIPIENT_ADDRESS")
