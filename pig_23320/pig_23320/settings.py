@@ -74,12 +74,16 @@ WSGI_APPLICATION = 'pig_23320.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'HOST': config('DATABASE_HOST'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'PORT': config('DATABASE_PORT')
+    }
+}
 
 
 # Password validation
@@ -125,7 +129,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-# esto se genera en producci�n y es la que deberemos
+# esto se genera en producción y es la que deberemos
 # crear y django ira a buscar ahi
 # python manage.py collectstatic
 STATIC_ROOT = BASE_DIR / 'static_root'

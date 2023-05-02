@@ -16,6 +16,7 @@ def custom_validate_email(value):
         raise ValidationError('Correo electrónico inválido')
 
 
+
 class ContactoForm(forms.Form):
     TIPO_CONSULTA = (
         ('', '-Seleccione-'),
