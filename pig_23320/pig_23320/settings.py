@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'pig_23320.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME'),
         'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
+        'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'PORT': config('DATABASE_PORT')
+        'PASSWORD': config('DATABASE_PASSWORD')
     }
 }
 

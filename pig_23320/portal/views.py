@@ -17,7 +17,7 @@ def index(request):
         # acción para tomar los datos del formulario
         if contacto_form.is_valid():
             messages.success(request, 'Hemos recibido tus datos')
-            mensaje = f"De: {contacto_form.cleaned_data['nombre']} <{contacto_form.cleaned_data['email']}>\n Asunto: {contacto_form.cleaned_data['asunto']}\n Mensaje: {contacto_form.cleaned_data['mensaje']}"
+            mensaje = f"De : {contacto_form.cleaned_data['nombre']} <{contacto_form.cleaned_data['email']}>\n Asunto: {contacto_form.cleaned_data['asunto']}\n Mensaje: {contacto_form.cleaned_data['mensaje']}"
             mensaje_html = f"""
                 <p>De: {contacto_form.cleaned_data['nombre']} <a href="mailto:{contacto_form.cleaned_data['email']}">{contacto_form.cleaned_data['email']}</a></p>
                 <p>Asunto:  {contacto_form.cleaned_data['asunto']}</p>
