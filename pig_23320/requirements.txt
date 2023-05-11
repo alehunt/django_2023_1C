@@ -3,10 +3,12 @@ astroid==2.15.1
 colorama==0.4.6
 dill==0.3.6
 Django==3.2
+django-extensions==3.2.1
 isort==5.12.0
 lazy-object-proxy==1.9.0
 mccabe==0.7.0
 platformdirs==3.2.0
+pillow==9.5.0
 psycopg2==2.9.6
 pycodestyle==2.10.0
 pylint==2.17.1
