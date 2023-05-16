@@ -63,7 +63,7 @@ def index(request):
         'cursos': listado_cursos,
         'contacto_form': contacto_form
     }
-    return render(request, 'portal/index.html', context)
+    return render(request, 'portal/index_portal.html', context)
 
 
 def quienes_somos(request):
@@ -118,7 +118,7 @@ def api_proyectos(request,):
 
 
 def proyectos(request):
-    return render(request, 'publica/proyectos.html')
+    return render(request, 'portal/proyectos.html')
 
 # NO USAR
 
@@ -162,7 +162,7 @@ def index_old(request):
                'hoy': datetime.now(),
                'cursos': listado_cursos
                }
-    return render(request, 'portal/index.html', context)
+    return render(request, 'portal/index_portal.html', context)
     # return HttpResponse(f"""<h1>PROYECTO DJANGO - CODO A CODO</h1>
     #             <p>{titulo}</p>
     #             <p>Param recibido: {parametro_uno}</p>

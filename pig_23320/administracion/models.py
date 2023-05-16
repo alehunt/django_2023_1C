@@ -13,47 +13,39 @@ from django.contrib.auth.models import User
 #     baja = models.BooleanField(default=0,null=True)
 #     legajo = models.CharField(max_length=10,verbose_name='Legajo',null=True)
 
-# Modelo Abtracto - SOLUCION 2
+#Modelo Abtracto - SOLUCION 2
+# class PersonaAbs(models.Model):
+#     nombre = models.CharField(max_length=100,verbose_name='Nombre')
+#     apellido = models.CharField(max_length=150,verbose_name='Apellido')
+#     email = models.EmailField(max_length=150,null=True)
+#     dni = models.IntegerField(verbose_name="DNI")
 
+#     class Meta:
+#         abstract=True
 
-class PersonaAbs(models.Model):
-    nombre = models.CharField(max_length=100, verbose_name='Nombre')
-    apellido = models.CharField(max_length=150, verbose_name='Apellido')
-    email = models.EmailField(max_length=150, null=True)
-    dni = models.IntegerField(verbose_name="DNI")
-    edad = models.IntegerField(verbose_name="Edad", default=0)
+# class EstudianteAbs(PersonaAbs):
+#     matricula = models.CharField(max_length=10,verbose_name='Matricula')
+#     baja = models.BooleanField(default=0,null=True)
 
-    class Meta:
-        abstract = True
+# class InstructorAbs(PersonaAbs):
+#     legajo = models.CharField(max_length=10,verbose_name='Legajo')
 
-
-class EstudianteAbs(PersonaAbs):
-    matricula = models.CharField(max_length=10, verbose_name='Matricula')
-    baja = models.BooleanField(default=0, null=True)
-
-
-class InstructorAbs(PersonaAbs):
-    legajo = models.CharField(max_length=10, verbose_name='Legajo')
-
-# HERENCIA - SOLUCION 3
-
-
+#HERENCIA - SOLUCION 3
 class Persona(models.Model):
-    nombre = models.CharField(max_length=100, verbose_name='Nombre')
-    apellido = models.CharField(max_length=150, verbose_name='Apellido')
-    email = models.EmailField(max_length=150, null=True)
+    nombre = models.CharField(max_length=100,verbose_name='Nombre')
+    apellido = models.CharField(max_length=150,verbose_name='Apellido')
+    email = models.EmailField(max_length=150,null=True)
     dni = models.IntegerField(verbose_name="DNI")
-
 
 class Estudiante(Persona):
-    matricula = models.CharField(max_length=10, verbose_name='Matricula')
+    matricula = models.CharField(max_length=10,verbose_name='Matricula')
     baja = models.BooleanField(default=0)
 
     def __str__(self):
         return f"{self.matricula} - {self.nombre} {self.apellido}"
-
+    
     def soft_delete(self):
-        self.baja = True
+        self.baja=True
         super().save()
 
     def restore(self):

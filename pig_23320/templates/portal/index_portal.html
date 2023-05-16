@@ -1,5 +1,5 @@
 
-{% extends 'portal/base.html' %}
+{% extends 'portal/base_portal.html' %}
 {% block titulo %}Inicio CAC{% endblock titulo %}
 {% block contenido %}
     <section class="py-5 text-center banner">
@@ -105,7 +105,7 @@
                                         {{campo}}
                                     {% endif %} {% endcomment %}
                                 </div>
-                                <div >{{campo.errors}}</div>
+                                <div>{{campo.errors}}</div>
                             </div>
                             <!--Grid column-->
                         {% endfor %}
