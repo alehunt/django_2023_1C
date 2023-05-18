@@ -3,15 +3,25 @@ from django import forms
 from .models import Curso, Categoria
 
 
-class CategoriaForm(forms.Form):
-    nombre = forms.CharField(error_messages={'required': 'Hello! no te olvide de mi!'})
+class CategoriaForm(forms.ModelForm):
+    # nombre = forms.CharField(error_messages={'required':'Hello! no te olvide de mi!'})
+
+    class Meta:
+        model = Categoria
+        # fields='__all__'
+        fields = ['nombre']
+        # exclude=('baja',)
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese un nombre'})
+        }
+        # error_messages = {
+        #     'nombre': {
+        #         'required': 'No te olvides de mi!'
+        #     }
+        # }
 
 
 class CursoForm(forms.ModelForm):
-
-    class Meta:
-        model = Curso
-        fields = ['nombre', 'fecha_inicio', 'portada', 'descripcion', 'categoria']
 
     nombre = forms.CharField(
         label='Nombre',
@@ -33,3 +43,7 @@ class CursoForm(forms.ModelForm):
     portada = forms.ImageField(
         widget=forms.FileInput(attrs={'class': 'form-control'})
     )
+
+    class Meta:
+        model = Curso
+        fields = ['nombre', 'fecha_inicio', 'portada', 'descripcion', 'categoria']
