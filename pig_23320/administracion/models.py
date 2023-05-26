@@ -38,6 +38,9 @@ class Persona(models.Model):
     email = models.EmailField(max_length=150,null=True)
     dni = models.IntegerField(verbose_name="DNI")
 
+    def __str__(self):
+        return f"{self.dni} - {self.nombre}"
+
 class Estudiante(Persona):
     matricula = models.CharField(max_length=10,verbose_name='Matricula')
     baja = models.BooleanField(default=0)

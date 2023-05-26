@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portal',
     'administracion',
-    'django_extensions'
+    'django_extensions',
+    'django.contrib.admin'
 ]
 
 MIDDLEWARE = [
