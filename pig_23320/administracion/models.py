@@ -2,6 +2,8 @@ from typing import Iterable, Optional
 from django.db import models
 
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify  # new
+from django.urls import reverse_lazy
 
 # Create your models here.
 # Modelo UNICO - SOLUCION 1
@@ -14,7 +16,7 @@ from django.contrib.auth.models import User
 #     baja = models.BooleanField(default=0,null=True)
 #     legajo = models.CharField(max_length=10,verbose_name='Legajo',null=True)
 
-#Modelo Abtracto - SOLUCION 2
+# Modelo Abtracto - SOLUCION 2
 # class PersonaAbs(models.Model):
 #     nombre = models.CharField(max_length=100,verbose_name='Nombre')
 #     apellido = models.CharField(max_length=150,verbose_name='Apellido')
@@ -31,30 +33,39 @@ from django.contrib.auth.models import User
 # class InstructorAbs(PersonaAbs):
 #     legajo = models.CharField(max_length=10,verbose_name='Legajo')
 
-#HERENCIA - SOLUCION 3
+# HERENCIA - SOLUCION 3
+
+
 class Persona(models.Model):
-    nombre = models.CharField(max_length=100,verbose_name='Nombre')
-    apellido = models.CharField(max_length=150,verbose_name='Apellido')
-    email = models.EmailField(max_length=150,null=True)
+    nombre = models.CharField(max_length=100, verbose_name='Nombre')
+    apellido = models.CharField(max_length=150, verbose_name='Apellido')
+    email = models.EmailField(max_length=150, null=True)
     dni = models.IntegerField(verbose_name="DNI")
 
     def __str__(self):
         return f"{self.dni} - {self.nombre}"
 
+
 class Estudiante(Persona):
-    matricula = models.CharField(max_length=10,verbose_name='Matricula')
+    matricula = models.CharField(max_length=10, verbose_name='Matricula')
     baja = models.BooleanField(default=0)
 
     def __str__(self):
         return f"{self.matricula} - {self.nombre} {self.apellido}"
-    
+
     def soft_delete(self):
-        self.baja=True
+        self.baja = True
         super().save()
 
     def restore(self):
         self.baja = False
         super().save()
+
+    def obtener_baja_url(self):
+        return reverse_lazy('estudiante_baja', args=[self.id])
+    
+    def obtener_modificacion_url(self):
+        return reverse_lazy('estudiante_modificacion', args=[self.id])
 
     class Meta():
         verbose_name_plural = 'Estudiantes'
@@ -99,9 +110,18 @@ class Curso(models.Model):
 class Comision(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     horario = models.CharField(max_length=100, verbose_name="Horario", null=True, default=None)
-    link_meet = models.URLField(max_length=100, verbose_name='Link de Meet')
+    link_meet = models.URLField(max_length=100, verbose_name='Link de Meet', null=True, default=None)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)  # relacion mucho a uno
     estudiantes = models.ManyToManyField(Estudiante, through='Inscripcion')
+
+    def __str__(self):
+        return f"{self.curso} - {self.nombre}"
+
+    def obtener_baja_url(self):
+        return reverse_lazy('comision_baja', args=[self.id])
+    
+    def obtener_modificacion_url(self):
+        return reverse_lazy('comision_modificacion', args=[self.id])
 
 # Modelo que genera tabla intermedia automaticamente
 # class ComisionMTM(models.Model):
@@ -135,6 +155,12 @@ class Inscripcion(models.Model):
 
     def __str__(self):
         return self.estudiante.nombre
+    
+    def obtener_baja_url(self):
+        return reverse_lazy('inscripcion_baja', args=[self.id])
+    
+    def obtener_modificacion_url(self):
+        return reverse_lazy('inscripcion_modificacion', args=[self.id])
 
 
 class Perfil(models.Model):
@@ -142,3 +168,25 @@ class Perfil(models.Model):
     telefono = models.CharField(max_length=20, verbose_name='Teléfono')
     domicilio = models.CharField(max_length=20, verbose_name='Domicilio')
     foto = models.ImageField(upload_to='perfiles/', null=True, verbose_name='Foto Perfil')
+
+
+class Proyecto(models.Model):
+    nombre = models.CharField(max_length=100, verbose_name='Nombre')
+    # campo del tipo slug
+    nombre_slug = models.SlugField(max_length=100, verbose_name='Nombre Slug', null=False, unique=True)
+    anio = models.IntegerField(verbose_name='Año')
+    descripcion = models.TextField(null=True, verbose_name='Descripcion')
+    url = models.URLField(max_length=100, verbose_name='Url')
+    portada = models.ImageField(upload_to='imagenes/proyecto/', null=True, verbose_name='Portada')
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre
+
+    def save(self, *args, **kwargs):
+        self.nombre_slug = slugify(f"{self.anio}-{self.nombre}")
+        super().save(*args, **kwargs)
+
+    def delete(self, using=None, keep_parents=False):
+        self.portada.storage.delete(self.portada.name)  # borrado fisico
+        super().delete()

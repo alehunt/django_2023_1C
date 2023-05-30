@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from administracion.forms import CategoriaForm, CursoForm
 
-from administracion.models import Categoria, Curso
+from administracion.models import Categoria, Curso, Comision, Estudiante, Inscripcion
 
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -129,7 +129,7 @@ class CategoriaListView(ListView):
 
 class CategoriaCreateView(CreateView):
     model = Categoria
-    # fields = ['nombre']
+    fields = ['nombre']
     # form_class = CategoriaForm
     template_name = 'administracion/categorias/nuevo.html'
     success_url = reverse_lazy('categorias_index_view')
@@ -165,3 +165,132 @@ class CategoriaDeleteView(DeleteView):
         self.object = self.get_object()
         self.object.soft_delete()  # Llamada al método soft_delete() del modelo
         return HttpResponseRedirect(self.get_success_url())
+
+
+class ComisionListView(ListView):
+    model = Comision
+    template_name = 'administracion/abm/index.html'
+    ordering = ['nombre']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Comisiones"
+        context['url_alta'] = reverse_lazy('comision_alta')
+        # context['url_modificacion'] = reverse_lazy('comision_modificacion')
+        # context['url_baja'] = reverse_lazy('comision_baja')
+        return context
+
+
+class ComisionCreateView(CreateView):
+    model = Comision
+    fields = ['curso', 'nombre']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('comision_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Nueva Comision"
+        context['url_accion'] = reverse_lazy('comision_alta')
+        return context
+
+
+class ComisionUpdateView(UpdateView):
+    model = Comision
+    fields = ['curso', 'nombre']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('comision_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Modificar Comision"
+        return context
+
+
+class ComisionDeleteView(DeleteView):
+    model = Comision
+    template_name = 'administracion/abm/baja.html'
+    success_url = reverse_lazy('comision_index')
+
+
+class EstudianteListView(ListView):
+    model = Estudiante
+    template_name = 'administracion/abm/index.html'
+    ordering = ['nombre']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Estudiantes"
+        context['url_alta'] = reverse_lazy('estudiante_alta')
+        return context
+
+
+class EstudianteCreateView(CreateView):
+    model = Estudiante
+    fields = ['nombre', 'apellido', 'email', 'dni', 'matricula']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('estudiante_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Nuevo Estudiante"
+        return context
+
+
+class EstudianteUpdateView(UpdateView):
+    model = Estudiante
+    fields = ['nombre', 'apellido', 'email', 'dni', 'matricula']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('estudiante_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Modificar Estudiante"
+        return context
+
+
+class EstudianteDeleteView(DeleteView):
+    model = Estudiante
+    template_name = 'administracion/abm/baja.html'
+    success_url = reverse_lazy('estudiante_index')
+
+
+class InscripcionListView(ListView):
+    model = Inscripcion
+    template_name = 'administracion/inscripcion/index.html'
+    ordering = ['fecha_creacion']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Inscripciones"
+        context['url_alta'] = reverse_lazy('inscripcion_alta')
+        return context
+
+
+class InscripcionCreateView(CreateView):
+    model = Inscripcion
+    fields = ['estudiante', 'comision', 'estado']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('inscripcion_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Nueva Inscripcion"
+        return context
+
+
+class InscripcionUpdateView(UpdateView):
+    model = Inscripcion
+    fields = ['estudiante', 'comision', 'estado']
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('inscripcion_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Modificar Inscripcion"
+        return context
+
+
+class InscripcionDeleteView(DeleteView):
+    model = Inscripcion
+    template_name = 'administracion/abm/baja.html'
+    success_url = reverse_lazy('inscripcion_index')

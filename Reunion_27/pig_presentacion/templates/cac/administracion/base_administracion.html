@@ -9,7 +9,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     {% load static %}
-    <link href="{% static '/administracion/css/styles.css'%}" rel="stylesheet" />
+    <link href="{% static '/cac/administracion/libs/css/styles.css'%}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -42,11 +42,10 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Administracion</div>
-                        <a class="nav-link" href="{% url 'estudiante_index' %}">
+                        <a class="nav-link" href="">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Estudiantes
                         </a>
-                       
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-laptop-code"></i></div>
                             Cursos
@@ -54,16 +53,11 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{% url 'categorias_index' %}">Categorias</a>
-                                <a class="nav-link" href="{% url 'cursos_index' %}">Cursos</a>
-                                <a class="nav-link" href="{% url 'comision_index' %}">Comisiones</a>
-                                <a class="nav-link" href="{% url 'inscripcion_index' %}">Inscripciones</a>
+                                <a class="nav-link" href="">Categorias</a>
+                                <a class="nav-link" href="">Cursos</a>
                             </nav>
                         </div>
-                        <a class="nav-link" href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Proyectos
-                        </a>
+                       
                         <a class="nav-link" href="{% url 'inicio' %}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-reply"></i></div>
                             Ir sitio principal
@@ -97,7 +91,8 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{% static '/administracion/js/scripts.js'%}"></script>
+    {% load static %}
+    <script src="{% static '/cac/administracion/libs/js/scripts.js'%}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 </body>

@@ -47,3 +47,4 @@ class CursoForm(forms.ModelForm):
     class Meta:
         model = Curso
         fields = ['nombre', 'fecha_inicio', 'portada', 'descripcion', 'categoria']
+
