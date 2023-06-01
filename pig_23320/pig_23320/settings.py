@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'portal',
     'administracion',
     'django_extensions',
-    'django.contrib.admin'
+    'django.contrib.admin',
+    # 'django.contrib.admin.apps.SimpleAdminConfig',  # No utiliza el autodiscover se debe hacer todo a mano"
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,8 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 # Clave generada desde la configuracion de Google
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 RECIPIENT_ADDRESS = config("RECIPIENT_ADDRESS")
+
+AUTH_USER_MODEL = 'administracion.Usuario'
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = "inicio"

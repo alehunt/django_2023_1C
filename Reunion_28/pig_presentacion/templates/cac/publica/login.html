@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+{% block titulo %}Login{% endblock titulo %}
+
+
+{% block contenido %}
+
+<section class="py-5 text-center">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto pt-4">
+            <div class="col-md-12">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            </div>
+            <form method="POST" style="border-radius:1%;">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                  {{ form }}
+                  <button class="btn btn-dark" type="submit"> Login</button>
+                </fieldset>
+              <a href="{% url 'registrarse' %}"> si no tiene una cuenta, registrese</a>
+              </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

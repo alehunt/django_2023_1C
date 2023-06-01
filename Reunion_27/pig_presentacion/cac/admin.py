@@ -38,9 +38,7 @@ sitio_admin.register(Estudiante, EstudianteAdmin)
 sitio_admin.register(Docente)
 sitio_admin.register(Curso)
 sitio_admin.register(Comision, ComisionAdmin)
-# sitio_admin.register(Inscripcion)
-
-
+sitio_admin.register(Inscripcion)
 
 
 # # Sobreescribiendo el sitio de admin por defecto
@@ -55,7 +53,9 @@ sitio_admin.register(Comision, ComisionAdmin)
 #     list_display_links = ('legajo',)
 #     search_fields = ['apellido']
 
-# admin.site.register(Estudiante, EstudianteAdmin)
+
+# # admin.site.register(Estudiante, EstudianteAdmin)
+
 
 # class DocenteAdmin(admin.ModelAdmin):
 #     form = DocenteForm
@@ -64,8 +64,6 @@ sitio_admin.register(Comision, ComisionAdmin)
 # @admin.display(description='Nombre del curso en mayuscula')
 # def curso_mayuscula(objeto):
 #     return f"Curso {objeto.nombre}".upper()
-
-
 
 
 # @admin.register(Curso)
@@ -80,16 +78,14 @@ sitio_admin.register(Comision, ComisionAdmin)
 #         return f"Curso {objeto.nombre}".lower()
 
 
-
-# @admin.register(Comision)
+# # @admin.register(Comision)
 # class ComisionAdmin(admin.ModelAdmin):
 #     list_display = ('nombre', 'fecha_inicio', )
-    
+
 #     def formfield_for_manytomany(self, db_field, request, **kwargs):
 #         if db_field.name == "estudiantes":
 #             kwargs["queryset"] = Estudiante.objects.filter(legajo__startswith="2").order_by("apellido")
 #         return super().formfield_for_manytomany(db_field, request, **kwargs)
-
 
 
 # @admin.register(Inscripcion)
@@ -100,3 +96,4 @@ sitio_admin.register(Comision, ComisionAdmin)
 # # Register your models here.
 # admin.site.register(Estudiante, EstudianteAdmin)
 # admin.site.register(Docente, DocenteAdmin)
+# admin.site.register(Comision, ComisionAdmin)

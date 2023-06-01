@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+{% block titulo %}Registrarse{% endblock titulo %}
+{% block contenido %}
+
+<div class="content-section col-md-8 col-md-offset-2">
+  <div class="col-md-12">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{message}}
+        </div>
+    {% endfor %}
+</div>
+  <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
+    {% csrf_token %}
+    {% for campo in form %}
+    <div class="form-group">
+        <label for="">{{campo.label}}</label>
+        <input 
+            type="{{campo.field.widget.input_type}}" 
+            name="{{campo.name}}" 
+            id="{{campo.name}}"
+            class="form-control"
+            placeholder="Ingrese {{campo.name}}"
+            value="{{ campo.value | default:'' }}"
+        >
+    </div>
+    <div>{{campo.errors}}</div>
+{% endfor %}
+<div class="row mt-3">
+    <div class="col-12">
+        <input type="submit" value="Registrarse" class="btn btn-success">
+        <a href="{% url 'login' %}"> si ya tenes una cuenta, logueate.</a>
+    </div>
+</div>
+    {% comment %} <fieldset class="form-group">
+      {{ form }}
+    </fieldset> {% endcomment %}
+  </form>
+</div>
+{% endblock contenido %}

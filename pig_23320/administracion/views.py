@@ -11,10 +11,12 @@ from django.http import HttpResponseRedirect
 
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-
+@login_required
 def index_administracion(request):
     variable = 'test variable'
     return render(request, 'administracion/index_administracion.html', {'variable': variable})
@@ -212,7 +214,7 @@ class ComisionDeleteView(DeleteView):
     success_url = reverse_lazy('comision_index')
 
 
-class EstudianteListView(ListView):
+class EstudianteListView(LoginRequiredMixin, ListView):
     model = Estudiante
     template_name = 'administracion/abm/index.html'
     ordering = ['nombre']

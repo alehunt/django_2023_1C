@@ -1,0 +1,137 @@
+{% extends './base.html' %}
+    
+{% block titulo %}Página de inicio{% endblock titulo %}
+
+{% block contenido %}
+
+    <section class="py-5 text-center banner">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-bold h1-banner">Codo a Codo 4.0</h1>
+                <p class="lead text-banner">Tu carrera hoy, TU TRABAJO MAÑANA</p>
+                <p>
+                <a href="#" class="btn btn-primary my-2">Ver más</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="album py-5 bg-light">
+        <div class="container">
+        <!--Section heading-->
+        <h2 class="h1-responsive font-weight-bold text-center my-4">Nuestros cursos</h2>
+        <!--Section description-->
+        <p class="text-center w-responsive mx-auto mb-5">Preparamos a los estudiantes para la demanda de las empresas más
+            innovadoras del área de programación.</p>
+                {% if cursos|length > 0 %}
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                        {% for curso in cursos %}
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img class="bd-placeholder-img card-img-top" width="100%" src="https://picsum.photos/id/{{ forloop.counter|add:500 }}/300/200" alt="{{curso.nombre}}"
+                                    width="20%">
+                                    <div class="card-body">
+                                        <h3>{{curso.nombre}}</h3>
+                                        <p class="card-text">{{curso.descripcion}}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
+                                            </div>
+                                            <small class="text-muted">{{curso.categoria}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="row justify-content-center">
+                        <div class="col-4 text-center">
+                            <div class="alert alert-warning" role="alert">
+                                <p>No hay cursos disponibles</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+    <section class="mb-4 container">
+
+        <!--Section heading-->
+        <h2 class="h1-responsive font-weight-bold text-center my-4">Contactanos</h2>
+        <!--Section description-->
+        <p class="text-center w-responsive mx-auto mb-5">¿Tiénes alguna pregunta? Por favor, no dudes en contactarnos
+        directamente. Nuestro equipo le responderá dentro de cuestión de horas para ayudarte.</p>
+    
+        <div class="row">
+    
+        <!--Grid column-->
+            <div class="col-md-6 mb-md-0 mb-6">
+
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                
+
+                <form novalidate id="contact-form" name="contact-form" action="{% url 'inicio' %}" method="POST">
+                    {% csrf_token %}
+
+                    {% comment %} {{ contacto_form }} {% endcomment %}
+
+                    {% comment %} <table>
+                        {{ contacto_form.as_table }}
+                    </table> {% endcomment %}
+
+                    {% comment %} <ul>
+                        {{ contacto_form.as_ul }}
+                    </ul> {% endcomment %}
+                    {% comment %} {{ contacto_form.as_p }} {% endcomment %}
+                    <div class="row">
+                        {% for campo in contacto_form %}
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <label for="">{{campo.label}}</label>
+                                    {{campo}}
+                                </div>
+                                <div>{{campo.errors}}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="text-center text-md-left mt-3">
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </form>
+                <div class="status"></div>
+            </div>
+        <!--Grid column-->
+    
+            <!--Grid column-->
+            <div class="col-md-6 text-center">
+                <ul class="list-unstyled mb-0">
+                <li><i class="fas fa-map-marker-alt fa-2x"></i>
+                    <p>Carlos H Perette y Calle 10, 5to piso</p>
+                </li>
+        
+                <li><i class="fas fa-phone mt-4 fa-2x"></i>
+                    <p>6076-6000 Int. 5046 y 5041</p>
+                </li>
+        
+                <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+                    <p>io.codoacodo@bue.edu.ar</p>
+                </li>
+                </ul>
+            </div>
+            <!--Grid column-->
+        </div>
+    </section>
+
+{% endblock contenido %}
+
+
+        
+    

@@ -2,6 +2,8 @@ import re
 from django import forms
 from django.forms import ValidationError
 
+from administracion.models import Usuario
+from django.contrib.auth.forms import UserCreationForm
 
 def solo_caracteres(value):
     if any(char.isdigit() for char in value):
@@ -82,3 +84,8 @@ class ContactoForm(forms.Form):
         if suscripcion and asunto and "suscripcion" not in asunto:
             msg = "Debe agregar la palabara 'suscripcion' al asunto."
             self.add_error('asunto', msg)
+
+class RegistrarUsuarioForm(UserCreationForm):
+    class Meta:
+        model = Usuario
+        fields = ['username','email' , 'password1', 'password2']

@@ -1,9 +1,9 @@
 from typing import Iterable, Optional
 from django.db import models
 
-from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify  # new
 from django.urls import reverse_lazy
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 # Modelo UNICO - SOLUCION 1
@@ -63,7 +63,7 @@ class Estudiante(Persona):
 
     def obtener_baja_url(self):
         return reverse_lazy('estudiante_baja', args=[self.id])
-    
+
     def obtener_modificacion_url(self):
         return reverse_lazy('estudiante_modificacion', args=[self.id])
 
@@ -119,7 +119,7 @@ class Comision(models.Model):
 
     def obtener_baja_url(self):
         return reverse_lazy('comision_baja', args=[self.id])
-    
+
     def obtener_modificacion_url(self):
         return reverse_lazy('comision_modificacion', args=[self.id])
 
@@ -155,16 +155,20 @@ class Inscripcion(models.Model):
 
     def __str__(self):
         return self.estudiante.nombre
-    
+
     def obtener_baja_url(self):
         return reverse_lazy('inscripcion_baja', args=[self.id])
-    
+
     def obtener_modificacion_url(self):
         return reverse_lazy('inscripcion_modificacion', args=[self.id])
 
 
+class Usuario(AbstractUser):
+    pass
+
+
 class Perfil(models.Model):
-    user = models.OneToOneField(Persona, on_delete=models.CASCADE)
+    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
     telefono = models.CharField(max_length=20, verbose_name='Teléfono')
     domicilio = models.CharField(max_length=20, verbose_name='Domicilio')
     foto = models.ImageField(upload_to='perfiles/', null=True, verbose_name='Foto Perfil')

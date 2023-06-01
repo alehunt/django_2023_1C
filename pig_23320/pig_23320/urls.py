@@ -18,11 +18,11 @@ from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
-from administracion.admin import sitio_admin
+# from administracion.admin import sitio_admin # Se debe cargar en admin.py
 
 urlpatterns = [
     path('', include('portal.urls')),
     path('admin/', admin.site.urls),
-    path('sitio_admin/', sitio_admin.urls),
+    # path('sitio_admin/', sitio_admin.urls), # Se debe cargar en admin.py
     path('administracion/', include('administracion.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,21 @@
+{% extends 'cac\administracion\base.html' %}
+
+{% block titulo %}Editar estudiante{% endblock%}
+
+{% block contenido %}
+<h1 class="mt-4">Estudiantes CAC</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'inicio_administracion' %}">Administracion</a></li>
+    <li class="breadcrumb-item active">Editar Estudiante</li>
+</ol>
+
+<div class="card">
+    <div class="card-header">Edicion de estudiante</div>
+    <div class="card-body">
+        <form action="{% url 'estudiantes_editar' id_estudiante %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'cac/administracion/form_campos.html' %}
+        </form>
+    </div>
+</div>
+{% endblock %}

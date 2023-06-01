@@ -1,0 +1,67 @@
+{% extends 'cac\administracion\base.html' %}
+
+{% block titulo %}Estudiantes{% endblock%}
+
+{% block contenido %}
+<h1 class="mt-4">Estudiantes CAC</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="{% url 'inicio_administracion' %}">Administracion</a></li>
+    <li class="breadcrumb-item active">Estudiantes</li>
+</ol>
+<div class="col-md-6 mb-md-0 mb-6">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+<div class="card">
+    <div class="card-body">
+        <a name="" id="" class="btn btn-success" href="{% url 'estudiantes_nuevo' %}" role="button"> <i class="fa-solid fa-circle-plus"></i> Nuevo</a>
+        <!-- bs5-table-defaul -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Dni</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estudiante in estudiantes %}
+                    <tr>
+                        <td>{{estudiante.nombre}}</td>
+                        <td>{{estudiante.apellido}}</td>
+                        <td>{{estudiante.legajo}}</td>
+                        <td>{{estudiante.email}}</td>
+                        <td>
+                            <a href="{% url 'estudiantes_editar' estudiante.id %}" title="Editar" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
+                            <a href="{% url 'estudiantes_eliminar' estudiante.id %}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% comment %} <div class="row">
+            <div class="col-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item"><a class="page-link" href="#"><<</a></li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">>></a></li>
+                    </ul>
+                  </nav>
+            </div>
+        </div> {% endcomment %}
+    </div>
+    <div class="card-footer text-muted">
+        Footer estudiantes
+    </div>
+</div>
+
+{% endblock %}
+    
