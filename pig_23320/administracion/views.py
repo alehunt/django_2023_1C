@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 
-from administracion.forms import CategoriaForm, CursoForm
+from administracion.forms import CategoriaForm, CursoForm, ComisionForm, EstudianteForm, ProyectoForm, InscripcionForm
 
-from administracion.models import Categoria, Curso, Comision, Estudiante, Inscripcion
+from administracion.models import Categoria, Curso, Comision, Estudiante,Inscripcion, Proyecto
 
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -13,11 +13,13 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 
 @login_required
-def index_administracion(request):
+@permission_required('administracion.add_categoria')
+def index_administracion(request):    
     variable = 'test variable'
     return render(request, 'administracion/index_administracion.html', {'variable': variable})
 
@@ -132,7 +134,7 @@ class CategoriaListView(ListView):
 class CategoriaCreateView(CreateView):
     model = Categoria
     fields = ['nombre']
-    # form_class = CategoriaForm
+    form_class = CategoriaForm
     template_name = 'administracion/categorias/nuevo.html'
     success_url = reverse_lazy('categorias_index_view')
 
@@ -185,7 +187,7 @@ class ComisionListView(ListView):
 
 class ComisionCreateView(CreateView):
     model = Comision
-    fields = ['curso', 'nombre']
+    form_class = ComisionForm
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('comision_index')
 
@@ -198,7 +200,7 @@ class ComisionCreateView(CreateView):
 
 class ComisionUpdateView(UpdateView):
     model = Comision
-    fields = ['curso', 'nombre']
+    form_class = ComisionForm
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('comision_index')
 
@@ -228,7 +230,7 @@ class EstudianteListView(LoginRequiredMixin, ListView):
 
 class EstudianteCreateView(CreateView):
     model = Estudiante
-    fields = ['nombre', 'apellido', 'email', 'dni', 'matricula']
+    form_class = EstudianteForm
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('estudiante_index')
 
@@ -240,7 +242,7 @@ class EstudianteCreateView(CreateView):
 
 class EstudianteUpdateView(UpdateView):
     model = Estudiante
-    fields = ['nombre', 'apellido', 'email', 'dni', 'matricula']
+    form_class = EstudianteForm
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('estudiante_index')
 
@@ -270,7 +272,8 @@ class InscripcionListView(ListView):
 
 class InscripcionCreateView(CreateView):
     model = Inscripcion
-    fields = ['estudiante', 'comision', 'estado']
+    form_class = InscripcionForm
+    # fields = ['estudiante', 'comision', 'estado']
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('inscripcion_index')
 
@@ -282,7 +285,8 @@ class InscripcionCreateView(CreateView):
 
 class InscripcionUpdateView(UpdateView):
     model = Inscripcion
-    fields = ['estudiante', 'comision', 'estado']
+    form_class = InscripcionForm
+    # fields = ['estudiante', 'comision', 'estado']
     template_name = 'administracion/abm/alta_modificacion.html'
     success_url = reverse_lazy('inscripcion_index')
 
@@ -296,3 +300,45 @@ class InscripcionDeleteView(DeleteView):
     model = Inscripcion
     template_name = 'administracion/abm/baja.html'
     success_url = reverse_lazy('inscripcion_index')
+
+
+class ProyectoListView(ListView):
+    model = Proyecto
+    template_name = 'administracion/abm/index.html'
+    ordering = ['nombre']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Proyectos"
+        context['url_alta'] = reverse_lazy('proyecto_alta')
+        return context
+
+
+class ProyectoCreateView(CreateView):
+    model = Proyecto
+    form_class = ProyectoForm
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('proyecto_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Nuevo Proyecto"
+        return context
+
+
+class ProyectoUpdateView(UpdateView):
+    model = Proyecto
+    form_class = ProyectoForm
+    template_name = 'administracion/abm/alta_modificacion.html'
+    success_url = reverse_lazy('proyecto_index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = "Modificar Proyecto"
+        return context
+
+
+class ProyectoDeleteView(DeleteView):
+    model = Proyecto
+    template_name = 'administracion/abm/baja.html'
+    success_url = reverse_lazy('proyecto_index')

@@ -35,6 +35,8 @@ urlpatterns = [
     path('inscripcion/modificacion/<int:pk>', views.InscripcionUpdateView.as_view(), name='inscripcion_modificacion'),
     path('inscripcion/baja/<int:pk>', views.InscripcionDeleteView.as_view(), name='inscripcion_baja'),
 
-    
-
+    path('proyecto/', views.ProyectoListView.as_view(), name='proyecto_index'),
+    path('proyecto/alta', views.ProyectoCreateView.as_view(), name='proyecto_alta'),
+    path('proyecto/modificacion/<int:pk>', views.ProyectoUpdateView.as_view(), name='proyecto_modificacion'),
+    path('proyecto/baja/<int:pk>', views.ProyectoDeleteView.as_view(), name='proyecto_baja'),
 ]

@@ -21,6 +21,7 @@ from django.contrib import admin
 # from administracion.admin import sitio_admin # Se debe cargar en admin.py
 
 urlpatterns = [
+    path('api/', include('recursos_api.urls')),
     path('', include('portal.urls')),
     path('admin/', admin.site.urls),
     # path('sitio_admin/', sitio_admin.urls), # Se debe cargar en admin.py

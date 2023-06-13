@@ -1,7 +1,7 @@
 from typing import Iterable, Optional
 from django.db import models
 
-from django.template.defaultfilters import slugify  # new
+from django.utils.text import slugify # new
 from django.urls import reverse_lazy
 from django.contrib.auth.models import AbstractUser
 
@@ -194,3 +194,8 @@ class Proyecto(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.portada.storage.delete(self.portada.name)  # borrado fisico
         super().delete()
+def obtener_baja_url(self):
+        return reverse_lazy('proyecto_baja', args=[self.id])
+
+def obtener_modificacion_url(self):
+    return reverse_lazy('proyecto_modificacion', args=[self.id])

@@ -14,13 +14,7 @@
     <div class="card-body">
         <form action="" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <div class="row mt-3">
-                <div class="col-12">
-                    <input type="submit" value="Guardar" class="btn btn-success">
-                    <a href="javascript:windows.history.go(-1)" class="btn btn-secondary">Cancelar</a>        
-                </div>
-            </div>
+            {% include 'administracion/categorias/form.html' %}
         </form>
     </div>
 </div>
