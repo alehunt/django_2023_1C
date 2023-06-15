@@ -1,0 +1,20 @@
+Paso a paso en python anywhere
+	1) Modificacion proyecto previo a la subida
+		* Agregar librerias de mysql		
+	2) Crear cuenta en python anywhere
+		Generar un api token
+	3) Crear usuario y base de datos en pythonanywhere
+	4) Correr los siguientes comandos en consola
+		pip install --user pythonanywhere
+		pa_autoconfigure_django.py --python=3.10 repositorio
+	5) Crear archivo .env (tener en cuenta datos db y puerto 3306)
+	6) Correr el collectstatic y la migracion
+		workon nombre entornovirtual
+		python manage.py collectstatic 
+		python manage.py migrate
+	6) En el settings.py modificar el debug y ALLOWED_HOSTS
+	6) Configurar en la web el static_root
+	7) Recargar el sitio
+	
+	
+Se puede usar una cuenta de Python anywhere que ya tengas.. lo que si hay que agregarle --nuke cuando ejecutes pa_autoconfigure_django.py --python=3.10 
